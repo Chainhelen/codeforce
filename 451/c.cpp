@@ -78,3 +78,56 @@ int main()
     }
     return 0;
 }
+/*
+（神解，看不懂）
+
+题目大意：题意有点坑，就是三支球队有n场比赛，错过了k场，即这k场比赛不知道输赢，只知道第一支球队和第二支球队胜局情况差d1，第二和第三差d2，问说最后有没有可能三支队伍胜局数相同。
+
+
+解题思路：考虑四种情况下的场数u，是否为3的倍数，u/3后是否比当前情况下胜局数最高的队伍大，并且还要判断该情况是否可行。
+
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+typedef long long ll;
+
+ll n, k, d1, d2;
+
+bool check (ll u, ll t) {
+    if (u % 3 || u > n)
+        return false;
+
+    return u / 3 >= t;
+}
+
+bool judge () {
+    if (n % 3)
+        return false;
+
+    if (check(n - k + d1 + d2 * 2, d1 + d2))
+        return true;
+
+    if (check(n - k + 2 * d1 + d2, d1 + d2))
+        return true;
+
+    if (check(n - k + d1 + d2, max(d1, d2)))
+        return true;
+
+    if (check(n - k + 2 * max(d1, d2) - min(d1, d2), max(d1, d2)))
+        return true;
+    return false;
+}
+
+int main () {
+    int cas;
+    scanf("%d", &cas);
+    for (int i = 0; i < cas; i++) {
+        scanf("%lld%lld%lld%lld", &n, &k, &d1, &d2);
+        printf("%s\n", judge() ? "yes" : "no");
+    }
+    return 0;
+}
+
+*/
